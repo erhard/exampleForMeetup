@@ -16,10 +16,9 @@
               "type": "markdown",
               "state": {
                 "file": "README.md",
-                "mode": "source"
+                "mode": "preview"
               }
-            },
-            "group": "1f0822884559c5e7"
+            }
           },
           {
             "id": "fdfbd675ba4b048b",
@@ -35,8 +34,7 @@
                 "backlinkCollapsed": false,
                 "unlinkedCollapsed": false
               }
-            },
-            "group": "1f0822884559c5e7"
+            }
           }
         ],
         "direction": "horizontal"
@@ -113,14 +111,14 @@
   },
   "lastOpenFiles": [
     "README.md",
+    "DirectoryStructure.md",
+    "packages2Install.md",
     "mainLayout.md",
     "i18n.md",
     "links.md",
-    "DirectoryStructure.md",
     "Untitled.md",
     "Packages2Install.md",
     "Packages to Install.md",
-    "Router.md",
-    "SPA.md"
+    "Router.md"
   ]
 }
