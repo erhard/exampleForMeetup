@@ -1,16 +1,16 @@
 
 Ziel der Session ist es den Autentikator von AWS einzubinden und sich über diesen anzumelden.
 Hier das was in dieser Session passiert ist.
-[packages2Install](packages2Install)
+[packages2Install](packages2Install.md)
 
-[links](links)
+[links](links.md)
 
-[SPA](SPA)
+[SPA](SPA.md)
 
-[DirectoryStructure](DirectoryStructure)
+[DirectoryStructure](DirectoryStructure.md)
 
-[i18n](i18n)
+[i18n](i18n.md)
 
-[mainLayout](mainLayout)
+[mainLayout](mainLayout.md)
 
-[Router](Router)
+[Router](Router.md)

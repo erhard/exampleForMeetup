@@ -16,7 +16,7 @@
               "type": "markdown",
               "state": {
                 "file": "README.md",
-                "mode": "preview"
+                "mode": "source"
               }
             }
           },
@@ -111,8 +111,8 @@
   },
   "lastOpenFiles": [
     "README.md",
-    "DirectoryStructure.md",
     "packages2Install.md",
+    "DirectoryStructure.md",
     "mainLayout.md",
     "i18n.md",
     "links.md",
