@@ -1,0 +1,126 @@
+{
+  "main": {
+    "id": "7c5453177c779852",
+    "type": "split",
+    "children": [
+      {
+        "id": "77c7039b8fb8e038",
+        "type": "split",
+        "children": [
+          {
+            "id": "9ab8cfe6bc05bb61",
+            "type": "leaf",
+            "dimension": 72.6027397260274,
+            "active": true,
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "README.md",
+                "mode": "source"
+              }
+            },
+            "group": "1f0822884559c5e7"
+          },
+          {
+            "id": "fdfbd675ba4b048b",
+            "type": "leaf",
+            "dimension": 27.397260273972602,
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "README.md",
+                "collapseAll": false,
+                "extraContext": true,
+                "sortOrder": "alphabetical",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": false
+              }
+            },
+            "group": "1f0822884559c5e7"
+          }
+        ],
+        "direction": "horizontal"
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "b97df40dbd39a672",
+    "type": "split",
+    "children": [
+      {
+        "id": "c808d59bcf8b10dc",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "0bd291f2dab3d56b",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {}
+            }
+          },
+          {
+            "id": "761472241afcedd1",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 206
+  },
+  "right": {
+    "id": "aabc8c999a416c88",
+    "type": "split",
+    "children": [
+      {
+        "id": "4f7f4ae84945c3fc",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "1ca1261e4cf84788",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "README.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "lastOpenFiles": [
+    "README.md",
+    "mainLayout.md",
+    "i18n.md",
+    "links.md",
+    "DirectoryStructure.md",
+    "Untitled.md",
+    "Packages2Install.md",
+    "Packages to Install.md",
+    "Router.md",
+    "SPA.md"
+  ]
+}
