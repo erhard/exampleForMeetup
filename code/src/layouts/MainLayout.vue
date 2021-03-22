@@ -14,10 +14,16 @@
           Photo App
         </q-toolbar-title>
 
-         <div class="absolute-right" v-if="loggedIn">
-          {{this.user}}
-          <q-btn @click="logout()" flat label="LogOut" class="right" />
+        <div class="absolute-right" v-if="!loggedIn">
+          <q-btn :to="{ path: localized_url('/language') }" flat :label="$t('auth.language')" class="right" />
+          <q-btn :to="localized_url('/signup')" flat :label="$t('auth.signUp')" class="right" />
+          <q-btn :to="localized_url('/login')" flat icon-right="account_circle" :label="$t('auth.login')" />
         </div>
+        <div class="absolute-right" v-if="loggedIn">
+          {{ user }}
+          <q-btn :to="{ path: localized_url('/language') }" flat :label="$t('auth.language')" class="right" />
+          <q-btn @click="logOut" flat label="LogOut" class="right" />
+        </div> 
       </q-toolbar>
     </q-header>
 
@@ -40,9 +46,6 @@
           <q-separator v-if="menuItem.separator" />
         </q-list> 
     </q-drawer>
-    
-     <amplify-authenticator v-if="!loggedIn" username-alias="email" hideDefault={true}>
-     </amplify-authenticator>
     <q-page-container>
       <router-view />
     </q-page-container>
@@ -50,98 +53,140 @@
 </template>
 
 <script>
-import '@aws-amplify/ui-vue';
-import {auth_logout} from 'src/services/cloud'
-import { onAuthUIStateChange } from '@aws-amplify/ui-components'
-
+import { auth_restore_session } from 'src/services/cloud_auth';
+import EventBus from 'src/services/eventBus';
+import { sleep, localized_url } from 'src/services/functions';
+import { set_lang } from 'src/services/locale';
 
 export default {
   name: 'MainLayout',
-  created() {
-    this.unsubscribeAuth = onAuthUIStateChange((authState, authData) => {
-      console.log(this.loggedIn);
-        this.loggedIn=false
-      if(authData){
-        this.loggedIn = true
-      this.user = authData.username;
-      console.log(this.user);
+  async created() {
+    this.createMenu(this.loggedIn);
+    let locale = 'de';
+    if (localStorage.locale) {
+      locale = localStorage.locale;
+    }
+    set_lang({ value: locale }, this);
+    const result = await auth_restore_session();
+    if (result.status == 'ok') {
+      this.$store.dispatch('auth/logIn', result.payload);
+    }
+    EventBus.$on('ERROR', payload => {
+      console.log('Error was fired');
+      this.message = payload.message;
+      this.sub_message = payload.sub_message;
+      this.nextRoute = payload.nextRoute;
+      this.messageDialog = true;
+    }); 
+  
+  EventBus.$on('DIALOG', payload => {
+      this.message = payload.message;
+      this.sub_message = payload.sub_message;
+      this.nextRoute = payload.nextRoute;
+      this.messageDialog = true;
+    });
+  
+  EventBus.$on('SPINNER_ON', payload => {
+      this.oldMessageDialog = this.messageDialog;
+      this.spinner = true;
+      this.currentTime = Date.now();
+    });
+    EventBus.$on('SPINNER_OFF', async payload => {
+      if (payload && payload.minTime) {
+        this.minWaitTime = payload.minTime;
       }
-      else{
-        this.user=""
+      const accessTime = Date.now() - this.currentTime;
+      if (accessTime < this.minWaitTime) {
+        const restTime = this.minWaitTime - accessTime;
+        await sleep(restTime);
       }
-      }
-    )
+      this.spinner = false;
+    });
+
+    EventBus.$on('SHORTMESSAGE', message => {
+      this.$q.notify(message);
+    });
+
+    EventBus.$on('CLOSE_DRAWER', message => {
+      this.leftDrawerOpen = false;
+    });
   },
   
   data () {
     return {
       leftDrawerOpen: false,
     
-menuList:  [
-  {
-    title: 'Upload',
-    caption: 'This is to upload the files',
-    icon: '',
-    link: '/upload'
-  },
-  {
-    title: 'View',
-    caption: '',
-    icon: 'code',
-    link: '/view'
-  },
-  {
-    title: 'Impressum',
-    caption: '',
-    icon: '',
-    link: '/impressum'
+menuList:[],
+    
+basicMenuList: [
+        {
+          title: 'languages',
+          caption: '',
+          icon: 'language',
+          link: '/language'
+        },
+
+        {
+          title: 'Impressum',
+          caption: '',
+          icon: 'impressum',
+          link: '/impressum'
+        }
+      ],
+     userMenuList: [
+        {
+          title: 'Cockpit',
+          caption: '',
+          icon: 'home',
+          link: '/cockpit'
+        },
+        {
+          title: 'upload',
+          caption: '',
+          icon: 'cloud_upload',
+          link: '/upload'
+        }
+      ],
+    }
   },
   
-],
-   loggedIn: false,
-   user: "",
-    
-
-
-signUpConfig: {
-  hideAllDefaults: true,
-  signUpFields: [
-    {
-      label: 'Email',
-      key: 'username',
-      required: true,
-      placeholder: 'Email',
-      type: 'email',
-      displayOrder: 1,
-    },
-    {
-      label: 'Password',
-      key: 'password',
-      required: true,
-      placeholder: 'Password',
-      type: 'password',
-      displayOrder: 2,
-    },
-  ],
-}
-
+  watch: {
+   //example for a watcher -- here watches the loggedIn variable and changes
+   //the menue accordingly
+   //the loggedIn Variable is a computed which is treated like a variable
+   loggedIn: function(newValue, oldValue) {
+      this.createMenu(newValue);
     }
-
-
-
+  },
+  
+  computed:{
+     loggedIn() {
+      return this.$store.getters['auth/loggedIn'];
+    },
+    user() {
+      return this.$store.getters['auth/user'];
+    },
   },
 
+
   methods: {
-    localized_url(url){
-      return(url)
+   createMenu(loggedIn) {
+      this.menuList = [];
+      if (!loggedIn) {
+        this.menuList = this.basicMenuList;
+      }
+      if (loggedIn) {
+        this.menuList = this.basicMenuList.concat(this.userMenuList);
+      }
+    }, 
+    logOut() {
+      this.$store.dispatch('auth/logOut', {});
+      EventBus.$emit('SHORTMESSAGE', 'Du bist ausgeloggt');
+      this.$router.push(localized_url('/'));
     },
-    async logout(){
-  console.log("logout called");
-     const stat = await auth_logout();
-     if (stat.status == "ok"){
-       this.loggedIn=false;
-     }
-    }
+    localized_url(url) {
+      return localized_url(url);
+    },  
   }
 
 }

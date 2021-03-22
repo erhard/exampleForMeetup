@@ -15,8 +15,8 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "README.md",
-                "mode": "source"
+                "file": "packages2Install.md",
+                "mode": "preview"
               }
             }
           },
@@ -27,7 +27,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "README.md",
+                "file": "packages2Install.md",
                 "collapseAll": false,
                 "extraContext": true,
                 "sortOrder": "alphabetical",
@@ -93,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "README.md",
+                "file": "packages2Install.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,15 +110,15 @@
     "collapsed": true
   },
   "lastOpenFiles": [
-    "README.md",
     "packages2Install.md",
+    "links.md",
+    "Router.md",
     "DirectoryStructure.md",
+    "SPA.md",
+    "README.md",
     "mainLayout.md",
     "i18n.md",
-    "links.md",
     "Untitled.md",
-    "Packages2Install.md",
-    "Packages to Install.md",
-    "Router.md"
+    "Packages2Install.md"
   ]
 }

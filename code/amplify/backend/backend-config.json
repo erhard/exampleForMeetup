@@ -1,0 +1,10 @@
+{
+  "auth": {
+    "photoapp229252bb": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  }
+}

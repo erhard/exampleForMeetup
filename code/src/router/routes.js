@@ -1,19 +1,81 @@
-
 const routes = [
   {
     path: '/',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [
-      { path: '', component: () => import('pages/Index.vue') }
-    ]
+    beforeEnter(to, from, next) {
+      // See if any of the matched routes has meta "requiresAuth"
+      let locale = 'de';
+      if (localStorage.locale) {
+        locale = localStorage.locale;
+      }
+      next('/' + locale);
+      return;
+    }
   },
-
-  // Always leave this as last one,
-  // but you can also remove it
   {
-    path: '*',
-    component: () => import('pages/Error404.vue')
-  }
-]
+    path: '/:locale',
+    component: () => import('src/layouts/MainLayout.vue'),
 
-export default routes
+    beforeEnter(to, from, next) {
+      // See if any of the matched routes has meta "requiresAuth"
+
+      let locale = 'de';
+      if (localStorage.locale) {
+        locale = localStorage.locale;
+      }
+      next();
+      return;
+    },
+
+    children: [
+      {
+        path: '',
+        component: () => import('src/pages/home.vue')
+      },
+      {
+        path: 'login',
+        component: () => import('src/pages/Auth.vue'),
+        props: { proc: 'login' }
+      },
+      {
+        path: 'signup',
+        component: () => import('src/pages/Auth.vue'),
+        props: { proc: 'signup' }
+      },
+      {
+        path: 'cockpit',
+        name: 'cockpit',
+        component: () => import('src/pages/Cockpit.vue'),
+        props: { proc: 'vkb' }
+      },
+      {
+        path: 'upload',
+        name: 'upload',
+        component: () => import('pages/Upload.vue')
+      },
+      {
+        path: 'language',
+        name: 'language',
+        component: () => import('src/pages/languageSelection.vue'),
+        props: { proc: 'vkb' }
+      },
+     
+      {
+        path: 'impressum',
+        name: 'impressum',
+        component: () => import('src/pages/Impressum.vue'),
+      },
+
+
+    ]
+  }
+];
+
+// Always leave this as last one
+if (process.env.MODE !== 'ssr') {
+  routes.push({
+    path: '*',
+    component: () => import('src/pages/Error404.vue')
+  });
+}
+
+export default routes;
