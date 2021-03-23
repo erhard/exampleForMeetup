@@ -1,6 +1,6 @@
 {
     "identityPoolName": "photoapp229252bb_identitypool_229252bb",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "photoa229252bb",
     "userPoolName": "photoapp229252bb_userpool_229252bb",
     "autoVerifiedAttributes": [
