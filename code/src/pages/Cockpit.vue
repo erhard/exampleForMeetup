@@ -1,13 +1,32 @@
 <template>
     <div>
- I am the Cockpit
+    {{photos}}
+    <photoTable
+     :photos = "photos"/>
     </div>
 </template>
 
 <script>
-    export default {
-        
+   
+   export default {
+  components: {
+    photoTable: require('components/photo/photoTable.vue').default
+  },
+
+    
+    
+    mounted() {
+          this.$store.dispatch("photo/listPhotos");
+      
+      },
+      computed:{
+          photos(){
+              return this.$store.getters["photo/photos"]
+          }
+      }      
     }
+
+
 </script>
 
 <style lang="scss" scoped>

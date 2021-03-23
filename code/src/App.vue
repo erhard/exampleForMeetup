@@ -4,7 +4,7 @@
   </div>
 </template>
 <script>
-import { configCloud } from "src/services/cloud";
+import { configCloud } from "src/services/cloud_auth";
 export default {
   name: 'App',
 
